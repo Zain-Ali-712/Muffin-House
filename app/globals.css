@@ -1,0 +1,331 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+  The Muffin House tokens, sampled from the official logo (Wix site):
+  - plum #3a1530 is the logo's outline, used as ink;
+  - pink #ef86b5 is the donut glaze, deep pink #b8326f is the one action colour;
+  - butter #f6c544 and grape #6d3fa3 are the sprinkle colours, used sparingly.
+  Ground is a warm cream so chocolate and glaze photos stay true.
+  Shape rule (from Health n Goodness): panels 28px, images in cards 20px, buttons pill, inputs 14px.
+*/
+:root {
+  color-scheme: light;
+
+  --ground: #fdf4ef;
+  --surface: #fffaf7;
+  --ink: #3a1530;
+  --ink-soft: #5d3a52;
+  --muted-ink: #765a6c;
+  --line: #efd8dc;
+  --pink: #ef86b5;
+  --pink-deep: #b8326f;
+  --pink-ink: #8e2154;
+  --pink-soft: #fbdde9;
+  --butter: #f6c544;
+  --butter-soft: #fcefc4;
+  --grape: #6d3fa3;
+  --choc: #3b2119;
+
+  --background: var(--ground);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--pink-deep);
+  --primary-foreground: #fffaf7;
+  --secondary: var(--pink-soft);
+  --secondary-foreground: var(--ink);
+  --muted: #f6e6e4;
+  --muted-foreground: var(--muted-ink);
+  --accent: var(--pink-soft);
+  --accent-foreground: var(--ink);
+  --destructive: #b3261e;
+  --border: var(--line);
+  --input: #dcbcc6;
+  --ring: var(--pink-deep);
+  --radius: 1.75rem;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-soft: 0 1px 0 rgb(58 21 48 / 0.04), 0 18px 40px -18px rgb(58 21 48 / 0.25);
+  --shadow-lift: 0 30px 60px -30px rgb(58 21 48 / 0.4);
+
+  --z-content: 10;
+  --z-header: 40;
+  --z-overlay: 50;
+}
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted-ink: var(--muted-ink);
+  --color-line: var(--line);
+  --color-pink: var(--pink);
+  --color-pink-deep: var(--pink-deep);
+  --color-pink-ink: var(--pink-ink);
+  --color-pink-soft: var(--pink-soft);
+  --color-butter: var(--butter);
+  --color-butter-soft: var(--butter-soft);
+  --color-grape: var(--grape);
+  --color-choc: var(--choc);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Fraunces (soft, a little wonky, like a glaze) for display; Geist for reading. */
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-geist), system-ui, sans-serif;
+  --font-heading: var(--font-fraunces), serif;
+
+  --radius-sm: 0.875rem;
+  --radius-md: 1.25rem;
+  --radius-lg: var(--radius);
+  --radius-xl: 2rem;
+  --radius-2xl: 2.5rem;
+
+  --shadow-soft: var(--shadow-soft);
+  --shadow-lift: var(--shadow-lift);
+  --ease-out-expo: var(--ease-out-expo);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/60;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    scroll-padding-top: 5.5rem;
+  }
+  a,
+  button,
+  label,
+  summary,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    overflow-x: clip;
+  }
+  :focus-visible {
+    outline: 2px solid var(--pink-deep);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--pink);
+    color: var(--ink);
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 88rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 3rem);
+  }
+  .display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-variation-settings: "SOFT" 100, "WONK" 0;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+  }
+  .eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--pink-ink);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    white-space: nowrap;
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1;
+    min-height: 3rem;
+    padding: 0 1.4rem;
+    transition:
+      background-color 0.25s var(--ease-out-expo),
+      color 0.25s var(--ease-out-expo),
+      border-color 0.25s,
+      scale 0.15s var(--ease-out-expo);
+  }
+  .btn:active {
+    scale: 0.97;
+  }
+  .btn-primary {
+    background: var(--pink-deep);
+    color: var(--surface);
+  }
+  .btn-primary:hover {
+    background: var(--pink-ink);
+  }
+  .btn-ghost {
+    border: 1px solid color-mix(in oklab, var(--ink) 22%, transparent);
+    color: var(--ink);
+    background: color-mix(in oklab, var(--surface) 55%, transparent);
+  }
+  .btn-ghost:hover {
+    border-color: var(--ink);
+    background: var(--surface);
+  }
+  .btn-ink {
+    background: var(--ink);
+    color: var(--surface);
+  }
+  .btn-ink:hover {
+    background: var(--pink-ink);
+  }
+  .btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    transition: background-color 0.2s;
+  }
+  .icon-btn:hover {
+    background: color-mix(in oklab, var(--ink) 7%, transparent);
+  }
+  .link-underline {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    transition: background-size 0.35s var(--ease-out-expo);
+    padding-bottom: 2px;
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* Form fields: errors appear only after interaction (:user-invalid). */
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    border: 1px solid var(--input);
+    border-radius: 14px;
+    background: var(--surface);
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    color: var(--ink);
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: #8a7182;
+  }
+  .field input:focus-visible,
+  .field select:focus-visible,
+  .field textarea:focus-visible {
+    outline: none;
+    border-color: var(--pink-deep);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--pink-deep) 22%, transparent);
+  }
+  .field .field-error {
+    display: none;
+    color: var(--destructive);
+    font-size: 0.875rem;
+  }
+  .field :is(input, select, textarea):user-invalid {
+    border-color: var(--destructive);
+    background: #fdf1ef;
+  }
+  .field:has(:is(input, select, textarea):user-invalid) .field-error {
+    display: block;
+  }
+
+  /* Sprinkle pattern lifted from the logo's confetti strokes. */
+  .sprinkles {
+    background-image:
+      radial-gradient(circle at 12% 18%, var(--butter) 0 3px, transparent 3.5px),
+      radial-gradient(circle at 78% 30%, var(--grape) 0 2.5px, transparent 3px),
+      radial-gradient(circle at 40% 82%, var(--surface) 0 3px, transparent 3.5px),
+      radial-gradient(circle at 88% 76%, var(--pink-deep) 0 2.5px, transparent 3px);
+    background-size: 180px 180px;
+  }
+}
+
+[data-slot="dialog-content"],
+[data-slot="sheet-content"] {
+  overscroll-behavior: contain;
+}
+
+/* Hero: slow spin for the plate ring, a soft bob for the product. */
+@keyframes spin-slow {
+  to {
+    rotate: 360deg;
+  }
+}
+.spin-slow {
+  animation: spin-slow 40s linear infinite;
+}
+@keyframes bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -12px;
+  }
+}
+.bob {
+  animation: bob 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin-slow,
+  .bob {
+    animation: none;
+  }
+  .btn:active {
+    scale: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+
